@@ -1,17 +1,17 @@
 package main
 
 import (
-	"fmt"
 	"net/http"
+
+	"lineBot/Controllers"
 )
 
 func main() {
-	// 1. /helloというエンドポイントを登録する
-	http.HandleFunc("/hello", func(w http.ResponseWriter, r *http.Request) {
-		// 2. クライアントからのリクエストを処理する
-		fmt.Fprintf(w, "Hello, World!")
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusOK)
 	})
 
-	// 3. サーバーを起動する
+	http.HandleFunc("/webhook", Controllers.HandleWebhook)
+
 	http.ListenAndServe(":8080", nil)
 }
